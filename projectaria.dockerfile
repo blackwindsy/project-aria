@@ -9,6 +9,7 @@ RUN apt -y install wget
 RUN apt -y install --fix-missing curl
 RUN apt -y install git
 
+
 #Download codebase
 RUN mkdir -p $HOME/Documents/projectaria_sandbox \
 && cd $HOME/Documents/projectaria_sandbox \
