@@ -19,7 +19,15 @@ Development environment has the following.
        cd C:\Users\myaccount
        git clone <this_repository_url>	
 
-1. [Local Windows machine] Run Xming
+1. [Local Windows machine] Get IP address of your Windows machine.  Execute the following in command prompt.
+
+       ipconfig
+
+1. [Local Windows machine] Run Xming and make sure it is running as a background process.
+
+1. [Local Windows machine] Open XTerm (X Terminal window) from Xming, and register the local Windows machine's IP address with XHost command.  Replace the IP address value in `docker_host_ip` part.  Execute the following in command prompt (XTerm window).
+
+       xhost docker_host_ip 
 
 1. [Local Windows machine] Run Docker Desktop
 
@@ -28,11 +36,7 @@ Development environment has the following.
        cd C:\Users\myaccount\project-aria
 	   docker image build -t ariatool -f projectaria.dockerfile .
 
-1. [Local Windows machine] Get IP address of the Docker Host (i.e. your Windows machine).  Execute the following in command prompt.
-
-       ipconfig
-
-1. [Local Windows machine] Run Docker container for Aria Tool, using the image built in the previous step.  Replace the IP address value in `docker_host_ip` part of DISPLAY environment variable in the command with the values acquired in the previous step.  Execute the following in command prompt.
+1. [Local Windows machine] Run Docker container for Aria Tool, using the image built in the previous step.  Replace the IP address value in `docker_host_ip` part of DISPLAY environment variable in the command with the value for the local Windows machine.  Execute the following in command prompt.
 
 	   docker container run -it --name ariatool -e DISPLAY=docker_host_ip:0.0 ariatool bash
 
