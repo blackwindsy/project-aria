@@ -6,5 +6,51 @@ The parent project web site is https://www.projectaria.com/
 
 ## Assumption
 Development environment has the following.
-* OS: Windows 11
-* Aria Tool setup is done through docker container for Ubuntu.
+* OS Windows 11 (a.k.a. local machine, localhost, local Windows machine, or Docker host)
+* Your home directory is C:\Users\myaccount
+* Aria Tool setup is done within Docker container on Ubuntu.
+
+
+## Set-up Instructions
+
+
+1. [Local Windows machine] Clone the GitHub repository under your home directory.  Execute the following in command prompt.
+
+       cd C:\Users\myaccount
+       git clone <this_repository_url>	
+
+1. [Local Windows machine] Run Xming
+
+1. [Local Windows machine] Run Docker Desktop
+
+1. [Local Windows machine] Build Docker image for Aria Tool.    Execute the following in command prompt.  **NOTE:** Don't miss the ending dot (.) in the build command.
+
+       cd C:\Users\myaccount\project-aria
+	   docker image build -t ariatool -f projectaria.dockerfile .
+
+1. [Local Windows machine] Get IP address of the Docker Host (i.e. your Windows machine).  Execute the following in command prompt.
+
+       ipconfig
+
+1. [Local Windows machine] Run Docker container for Aria Tool, using the image built in the previous step.  Replace the IP address value in `docker_host_ip` part of DISPLAY environment variable in the command with the values acquired in the previous step.  Execute the following in command prompt.
+
+	   docker container run -it --name ariatool -e DISPLAY=docker_host_ip:0.0 ariatool bash
+
+1. [Ubuntu Docker container] Run Aria Tool.  Execute the following in command prompt.
+
+       cd ~/projectaria_tools_python_env/bin
+	   ./viewer_aria_sensors --vrs $MPS_SAMPLE_PATH/sample.vrs
+
+1. [Ubuntu Docker container] If the command above fails with the following error, try setting DISPLAY variable within the container, and try the above command again.  Make sure you specify the correct IP address of the Docker Host.  Execute the following in command prompt.
+
+       export DISPLAY=192.168.1.101
+
+
+   > **Note:** The following directories within the container should be useful 
+   > * Aria Tool local git repository: `~/Documents/projectaria_sandbox` 
+   > * Aria Tool Python virtual environment: `~/projectaria_tools_python_env` 
+   > * Sample Visualization Data file location: `/tmp/mps_sample` 
+
+
+1. [Local Windows machine] Xming should receive windowing data from the container, and open a window for it in your local Windows machine.
+
